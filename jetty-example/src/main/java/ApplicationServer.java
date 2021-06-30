@@ -24,6 +24,7 @@ public class ApplicationServer {
         ServletContextHandler handler = new ServletContextHandler();
         handler.addServlet(new ServletHolder(servlet), "/*");
         addStaticFileServing(handler);
+        withRythm();
         server.setHandler(handler);
         server.start();
     }
