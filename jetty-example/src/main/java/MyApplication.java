@@ -5,20 +5,42 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import com.google.gson.Gson;
 
 public class MyApplication extends HttpServlet {
 
     private List<String> names = new ArrayList<>();
 
+    static HashMap<String, JsontoString.Person> HMPerson = new HashMap<>();
+    static JsontoString.Address address = new JsontoString.Address("TienCat", "VietTri", "PhuTho");
+    static JsontoString.Person Hung = new JsontoString.Person("Hung", 30, "abc@gmail", address);
+    static JsontoString.Address address2 = new JsontoString.Address("An Khanh", "Hoai Duc", "Ha Noi");
+    static JsontoString.Person Hieu = new JsontoString.Person("Hieu", 32, "bcd@gmail", address2);
+
+    static {
+        HMPerson.put("123", Hung);
+        HMPerson.put("456", Hieu);
+    }
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        if(names.isEmpty()) {
-            write(resp, "empty");
+        String id = req.getParameter("id");
+        System.out.println(id);
+        JsontoString.Person p = HMPerson.get(id);
+        if (p == null) {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return;
         }
-        else {
-            write(resp, String.join(",", names));
-        }
+        Gson gson = new Gson();
+        String StringPerson = gson.toJson(p);
+        write(resp, StringPerson);
+        resp.setStatus(HttpServletResponse.SC_OK);
+
+
     }
 
     @Override
