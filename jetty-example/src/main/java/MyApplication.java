@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.google.gson.Gson;
-
 public class MyApplication extends HttpServlet {
 
     private List<String> names = new ArrayList<>();
@@ -23,23 +21,33 @@ public class MyApplication extends HttpServlet {
     static {
         HMPerson.put("123", Hung);
         HMPerson.put("456", Hieu);
+
+
     }
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String id = req.getParameter("id");
-        System.out.println(id);
-        JsontoString.Person p = HMPerson.get(id);
-        if (p == null) {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return;
+//        String id = req.getParameter("id");
+//        System.out.println(id);
+//        JsontoString.Person p = HMPerson.get(id);
+//        if (p == null) {
+//            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//            return;
+//        }
+//        Gson gson = new Gson();
+//        String StringPerson = gson.toJson(p);
+//        write(resp, StringPerson);
+//        resp.setStatus(HttpServletResponse.SC_OK);
+        String action = req.getParameter("action");
+        if (action.equals("categories")){
+            String respString = Factory.getCategori();
+            write(resp, respString);
         }
-        Gson gson = new Gson();
-        String StringPerson = gson.toJson(p);
-        write(resp, StringPerson);
-        resp.setStatus(HttpServletResponse.SC_OK);
-
+        else if (action.equals("product")){
+            String respProduct = Factory.getProduct();
+            write(resp, respProduct);
+        }
 
     }
 
