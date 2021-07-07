@@ -67,6 +67,14 @@ public class MyApplication extends HttpServlet {
             String respOrder_details = Factory.getOrder_details();
             write(resp,respOrder_details);
         }
+        else if (action.equals("shippers")){
+            String respShipper = Factory.getShipper();
+            write(resp, respShipper);
+        }
+        else if (action.equals("suppliers")){
+            String respSupp = Factory.getSuppliers();
+            write(resp, respSupp);
+        }
 
     }
 

@@ -8,6 +8,57 @@ import org.rythmengine.utils.S;
 
 public class Factory {
 
+    public static String getSuppliers() {
+        ResultSet resultSet;
+        try {
+            resultSet = getrs("select * from suppliers");
+            ArrayList<Suppliers> supp = new ArrayList<>();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("supplierID");
+                String name = resultSet.getString("supplierName");
+                String contact = resultSet.getString("contactName");
+                String address = resultSet.getString("address");
+                String city = resultSet.getString("city");
+                String code = resultSet.getString("postalCode");
+                String country = resultSet.getString("country");
+                String phone = resultSet.getString("phone");
+                Suppliers suppliers = new Suppliers(id, name, contact, address, city, code, country, phone);
+                supp.add(suppliers);
+            }
+            Gson gson = new Gson();
+            String jison = gson.toJson(supp);
+            System.out.println(jison);
+            return jison;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public static String getShipper() {
+        ResultSet resultSet;
+        try {
+            resultSet = getrs("select * from shippers");
+            ArrayList<Shippers> sp = new ArrayList<>();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("ShipperID");
+                String name = resultSet.getString("ShipperName");
+                String phone = resultSet.getString("Phone");
+                Shippers shipper = new Shippers(id, name, phone);
+                sp.add(shipper);
+            }
+            Gson gson = new Gson();
+            String jison = gson.toJson(sp);
+            System.out.println(jison);
+            return jison;
+        } catch (SQLException e) {
+            System.out.println(e);
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
     public static String getOrder_details() {
         ResultSet resultSet;
         try {
