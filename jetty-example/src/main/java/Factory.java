@@ -3,13 +3,61 @@ import java.util.ArrayList;
 
 import com.google.gson.Gson;
 import com.sun.tools.internal.xjc.reader.gbind.OneOrMore;
-import model.Categories;
-import model.Customers;
-import model.Employees;
-import model.Product;
+import model.*;
 import org.rythmengine.utils.S;
 
 public class Factory {
+
+    public static String getOrder_details() {
+        ResultSet resultSet;
+        try {
+            resultSet = getrs("select * from order_details");
+            ArrayList<Order_details> order_details = new ArrayList<>();
+            while (resultSet.next()) {
+                int orderDetailID = resultSet.getInt("orderDetailID");
+                int orderID = resultSet.getInt("orderID");
+                int productID = resultSet.getInt("productID");
+                int quantity = resultSet.getInt("quantity");
+                Order_details order_detail = new Order_details(orderDetailID, orderID, productID, quantity);
+                order_details.add(order_detail);
+            }
+            Gson gson = new Gson();
+            String jison = gson.toJson(order_details);
+            System.out.println(jison);
+            return jison;
+        } catch (SQLException e) {
+            System.out.println(e);
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public static String getOrders() {
+        ResultSet resultSet;
+        try {
+            resultSet = getrs("select * from orders");
+            ArrayList<Orders> rsOrder = new ArrayList<>();
+            while (resultSet.next()) {
+                int orderID = resultSet.getInt("OrderID");
+                int customerID = resultSet.getInt("CustomerID");
+                int employeeID = resultSet.getInt("EmployeeID");
+                String orderDate = resultSet.getString("OrderDate");
+                int shipperID = resultSet.getInt("ShipperID");
+                Orders orders = new Orders(orderID, customerID, employeeID, orderDate, shipperID);
+                rsOrder.add(orders);
+            }
+            Gson gson = new Gson();
+            String jison = gson.toJson(rsOrder);
+            System.out.println(jison);
+            return jison;
+        } catch (SQLException e) {
+            System.out.println(e);
+        } catch (ClassNotFoundException ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
 
     public static String getEmployees() {
         ResultSet resultSet;

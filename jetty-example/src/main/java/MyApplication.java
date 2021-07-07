@@ -1,5 +1,6 @@
 
 
+import org.rythmengine.utils.F;
 import org.rythmengine.utils.S;
 
 import javax.servlet.http.HttpServlet;
@@ -57,6 +58,14 @@ public class MyApplication extends HttpServlet {
         else if (action.equals("employees")){
             String respEmployee = Factory.getEmployees();
             write(resp, respEmployee);
+        }
+        else if (action.equals("orders")){
+            String respOrders = Factory.getOrders();
+            write(resp, respOrders);
+        }
+        else if (action.equals("order_details")){
+            String respOrder_details = Factory.getOrder_details();
+            write(resp,respOrder_details);
         }
 
     }
