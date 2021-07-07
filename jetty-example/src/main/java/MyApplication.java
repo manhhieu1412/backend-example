@@ -54,6 +54,10 @@ public class MyApplication extends HttpServlet {
             String respCustomer = Factory.getCustomers();
             write(resp, respCustomer);
         }
+        else if (action.equals("employees")){
+            String respEmployee = Factory.getEmployees();
+            write(resp, respEmployee);
+        }
 
     }
 

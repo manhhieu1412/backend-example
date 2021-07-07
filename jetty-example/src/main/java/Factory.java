@@ -2,11 +2,41 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
+import com.sun.tools.internal.xjc.reader.gbind.OneOrMore;
 import model.Categories;
 import model.Customers;
+import model.Employees;
 import model.Product;
+import org.rythmengine.utils.S;
 
 public class Factory {
+
+    public static String getEmployees() {
+        ResultSet resultSet;
+        try {
+            resultSet = getrs("select * from employees");
+            ArrayList<Employees> rsEmployee = new ArrayList<>();
+            while (resultSet.next()) {
+                String id = resultSet.getString("EmployeeID");
+                String lName = resultSet.getString("LastName");
+                String fName = resultSet.getString("FirstName");
+                String bd = resultSet.getString("Birthdate");
+                String photo = resultSet.getString("Photo");
+                String notes = resultSet.getString("Notes");
+                Employees employee = new Employees(id, lName, fName, bd, photo, notes);
+                rsEmployee.add(employee);
+            }
+            Gson gson = new Gson();
+            String jison = gson.toJson(rsEmployee);
+            System.out.println(jison);
+            return jison;
+        } catch (SQLException e) {
+            System.out.println(e);
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
 
     public static String getProduct() {
         ResultSet resultSet = null;
