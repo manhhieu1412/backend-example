@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import com.google.gson.Gson;
 import model.Categories;
+import model.Customers;
 import model.Product;
 
 public class Factory {
@@ -58,6 +59,35 @@ public class Factory {
         }
         return null;
     }
+
+    public static String getCustomers() {
+        ResultSet resultSet = null;
+        try {
+            resultSet = getrs("select * from customers");
+            ArrayList<Customers> rsCustomers = new ArrayList<>();
+            while (resultSet.next()) {
+                String customerID = resultSet.getString("CustomerID");
+                String customerName = resultSet.getString("CustomerName");
+                String contactName = resultSet.getString("ContactName");
+                String address = resultSet.getString("Address");
+                String city = resultSet.getString("City");
+                String postalCode = resultSet.getString("PostalCode");
+                String country = resultSet.getString("Country");
+                Customers customers = new Customers(customerID, customerName, contactName, address, city, postalCode, country);
+                rsCustomers.add(customers);
+            }
+            Gson gson = new Gson();
+            String jison = gson.toJson(rsCustomers);
+            System.out.println(jison);
+            return jison;
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
 
     public static ResultSet getrs(String query) throws SQLException, ClassNotFoundException {
         Connection connection;
