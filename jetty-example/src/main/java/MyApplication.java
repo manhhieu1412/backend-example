@@ -1,11 +1,11 @@
 
 
-import org.rythmengine.utils.F;
 import org.rythmengine.utils.S;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,19 +29,36 @@ public class MyApplication extends HttpServlet {
     }
 
 
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//        String id = req.getParameter("id");
-//        System.out.println(id);
-//        JsontoString.Person p = HMPerson.get(id);
-//        if (p == null) {
-//            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//            return;
-//        }
-//        Gson gson = new Gson();
-//        String StringPerson = gson.toJson(p);
-//        write(resp, StringPerson);
-//        resp.setStatus(HttpServletResponse.SC_OK);
+        String country = req.getParameter("country");
+        if (country !=null){
+            String rsp = Factory.getCountry(country);
+            write(resp,rsp);
+            return;
+        }
+
+
+        String shipID = req.getParameter("ShipperID");
+        if (shipID !=null){
+            String response = Factory.getShipperID(shipID);
+            write(resp, response);
+            return;
+        }
+
+        String categoryId = req.getParameter("categoryId");
+        if (categoryId != null) {
+            String respString = Factory.getCategoryById(categoryId);
+            write(resp, respString);
+            return;
+        }
+        String categoryName = req.getParameter("categoryName");
+        if (categoryName != null) {
+            String respString = Factory.getCategoryName(categoryName);
+            write(resp, respString);
+            return;
+        }
         String action = req.getParameter("action");
         if (action.equals("categories")){
             String respString = Factory.getCategori();
@@ -64,7 +81,7 @@ public class MyApplication extends HttpServlet {
             write(resp, respOrders);
         }
         else if (action.equals("order_details")){
-            String respOrder_details = Factory.getOrder_details();
+            String respOrder_details = Factory.getOrderDetails();
             write(resp,respOrder_details);
         }
         else if (action.equals("shippers")){
@@ -75,8 +92,9 @@ public class MyApplication extends HttpServlet {
             String respSupp = Factory.getSuppliers();
             write(resp, respSupp);
         }
-
     }
+
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {

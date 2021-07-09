@@ -8,6 +8,106 @@ import org.rythmengine.utils.S;
 
 public class Factory {
 
+    public static String getCountry(String country) {
+        ResultSet resultSet;
+        try {
+            String query = "select * from suppliers where Country = " + "'" + country + "'";
+            System.out.println(query);
+            resultSet = getrs(query);
+            ArrayList<Suppliers> sup = new ArrayList<>();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("supplierID");
+                String name = resultSet.getString("supplierName");
+                String contact = resultSet.getString("contactName");
+                String address = resultSet.getString("address");
+                String city = resultSet.getString("city");
+                String code = resultSet.getString("postalCode");
+                String ctr = resultSet.getString("country");
+                String phone = resultSet.getString("phone");
+                Suppliers s = new Suppliers(id, name, contact, address, city, code, ctr, phone);
+                sup.add(s);
+            }
+            Gson gson = new Gson();
+            String jison = gson.toJson(sup);
+            return jison;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public static String getShipperID(String shipperID) {
+        ResultSet resultSet;
+        try {
+            String query = "select * from orders where ShipperID = " + shipperID;
+            System.out.println(query);
+            resultSet = getrs(query);
+            ArrayList<Orders> ord = new ArrayList<>();
+            while (resultSet.next()) {
+                int orderID = resultSet.getInt("OrderID");
+                int customerID = resultSet.getInt("CustomerID");
+                int employeeID = resultSet.getInt("EmployeeID");
+                String orderDate = resultSet.getString("OrderDate");
+                int shipID = resultSet.getInt("ShipperID");
+                Orders orders = new Orders(orderID, customerID, employeeID, orderDate, shipID);
+                ord.add(orders);
+            }
+            Gson gson = new Gson();
+            String jison = gson.toJson(ord);
+            return jison;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public static String getCategoryName(String categoryName) {
+        ResultSet resultSet;
+        try {
+            String query = "select * from categories where CategoryName = " + "'" + categoryName + "'";
+            System.out.println(query);
+            resultSet = getrs(query);
+            ArrayList<Categories> cate = new ArrayList<>();
+            if (resultSet.next()) {
+                String id = resultSet.getString("categoryID");
+                String name = resultSet.getString("categoryName");
+                String Des = resultSet.getString("Description");
+                Categories categories = new Categories(id, name, Des);
+                cate.add(categories);
+            }
+            Gson gson = new Gson();
+            String jison = gson.toJson(cate);
+            return jison;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public static String getCategoryById(String categoryId) {
+        ResultSet resultSet;
+        try {
+            String query = "select * from categories where categoryId = " + categoryId;
+            System.out.println(query);
+            resultSet = getrs(query);
+            ArrayList<Categories> result = new ArrayList<>();
+            if (resultSet.next()) {
+                String id = resultSet.getString("CategoryID");
+                String name = resultSet.getString("CategoryName");
+                String des = resultSet.getString("Description");
+                Categories categories = new Categories(id, name, des);
+                result.add(categories);
+            }
+            Gson gson = new Gson();
+            String jison = gson.toJson(result);
+            System.out.println(jison);
+            return jison;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
     public static String getSuppliers() {
         ResultSet resultSet;
         try {
@@ -59,7 +159,7 @@ public class Factory {
         return null;
     }
 
-    public static String getOrder_details() {
+    public static String getOrderDetails() {
         ResultSet resultSet;
         try {
             resultSet = getrs("select * from order_details");
