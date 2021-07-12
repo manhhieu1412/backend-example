@@ -6,9 +6,11 @@ import com.sun.tools.internal.xjc.reader.gbind.OneOrMore;
 import model.*;
 import org.rythmengine.utils.S;
 
+import javax.servlet.http.Part;
+
 public class Factory {
 
-    public static String getCountry(String country) {
+    public static String getCountry(Part country) {
         ResultSet resultSet;
         try {
             String query = "select * from suppliers where Country = " + "'" + country + "'";

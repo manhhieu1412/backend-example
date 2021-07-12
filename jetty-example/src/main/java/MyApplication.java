@@ -29,19 +29,24 @@ public class MyApplication extends HttpServlet {
     }
 
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String country = req.getParameter("country");
-        if (country !=null){
-            String rsp = Factory.getCountry(country);
-            write(resp,rsp);
-            return;
+        try {
+            Part country = req.getPart("country");
+            System.out.println("chay vao day");
+            System.out.println(country);
+            if (country != null) {
+                String rsp = Factory.getCountry(country);
+                write(resp, rsp);
+                return;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
 
 
         String shipID = req.getParameter("ShipperID");
-        if (shipID !=null){
+        if (shipID != null) {
             String response = Factory.getShipperID(shipID);
             write(resp, response);
             return;
@@ -60,40 +65,32 @@ public class MyApplication extends HttpServlet {
             return;
         }
         String action = req.getParameter("action");
-        if (action.equals("categories")){
+        if (action.equals("categories")) {
             String respString = Factory.getCategori();
             write(resp, respString);
-        }
-        else if (action.equals("product")){
+        } else if (action.equals("product")) {
             String respProduct = Factory.getProduct();
             write(resp, respProduct);
-        }
-        else if (action.equals("customers")){
+        } else if (action.equals("customers")) {
             String respCustomer = Factory.getCustomers();
             write(resp, respCustomer);
-        }
-        else if (action.equals("employees")){
+        } else if (action.equals("employees")) {
             String respEmployee = Factory.getEmployees();
             write(resp, respEmployee);
-        }
-        else if (action.equals("orders")){
+        } else if (action.equals("orders")) {
             String respOrders = Factory.getOrders();
             write(resp, respOrders);
-        }
-        else if (action.equals("order_details")){
+        } else if (action.equals("order_details")) {
             String respOrder_details = Factory.getOrderDetails();
-            write(resp,respOrder_details);
-        }
-        else if (action.equals("shippers")){
+            write(resp, respOrder_details);
+        } else if (action.equals("shippers")) {
             String respShipper = Factory.getShipper();
             write(resp, respShipper);
-        }
-        else if (action.equals("suppliers")){
+        } else if (action.equals("suppliers")) {
             String respSupp = Factory.getSuppliers();
             write(resp, respSupp);
         }
     }
-
 
 
     @Override
