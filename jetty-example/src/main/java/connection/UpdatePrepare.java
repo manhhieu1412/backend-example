@@ -9,7 +9,6 @@ public class UpdatePrepare {
         String sql = "INSERT INTO Person(id,name) VALUES(?,?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.executeUpdate();
             preparedStatement.setInt(1, id);
             preparedStatement.setString(2, name);
             int rs = preparedStatement.executeUpdate();
@@ -19,13 +18,14 @@ public class UpdatePrepare {
         }
     }
 
+
     public static void updateRecords(int id, String name) {
         Connection connection = JBDCConnection.getJBDCConnection();
         String sql = "UPDATE Person SET name = ? WHERE id = ? ";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,name);
-            preparedStatement.setInt(2,id);
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2, id);
             int rs = preparedStatement.executeUpdate();
             System.out.println(rs);
         } catch (Exception e) {
@@ -33,12 +33,23 @@ public class UpdatePrepare {
         }
     }
 
-    public static void deleteRecords(int id){
-        
+    public static void deleteRecords(int id) {
+        Connection connection = JBDCConnection.getJBDCConnection();
+        String sql = "DELETE FROM Person WHERE id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            int rs = preparedStatement.executeUpdate();
+            System.out.println(rs);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public static void main(String[] args) {
-//        insertRecords(5, "P");
-        updateRecords(3, "W");
+        insertRecords(4, "M");
+//        updateRecords(1, "W");
+//        updateRecords(2,"E");
+//        deleteRecords(2);
     }
 }
