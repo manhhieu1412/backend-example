@@ -31,17 +31,19 @@ public class MyApplication extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        try {
-            Part country = req.getPart("country");
-            System.out.println("chay vao day");
-            System.out.println(country);
-            if (country != null) {
-                String rsp = Factory.getCountry(country);
-                write(resp, rsp);
-                return;
-            }
-        } catch (Exception e) {
-            System.out.println(e);
+
+        String price = req.getParameter("price");
+        if (price != null) {
+            String respPrice = Factory.getProduct(price);
+            write(resp, respPrice);
+            return;
+        }
+
+        String country = req.getParameter("country");
+        if (country != null) {
+            String respCountry = Factory.getCountry(country);
+            write(resp, respCountry);
+            return;
         }
 
 

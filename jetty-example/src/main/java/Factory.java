@@ -10,7 +10,34 @@ import javax.servlet.http.Part;
 
 public class Factory {
 
-    public static String getCountry(Part country) {
+    public static String getProduct(String Price) {
+        ResultSet resultSet;
+        try {
+            String query = "select * from products where Price = " + Price;
+            System.out.println(query);
+            resultSet = getrs(query);
+            ArrayList<Product> arr = new ArrayList<>();
+            while (resultSet.next()) {
+                String productID = resultSet.getString("ProductID");
+                String productName = resultSet.getString("ProductName");
+                String supplierID = resultSet.getString("supplierID");
+                String categoryID = resultSet.getString("CategoryID");
+                String unit = resultSet.getString("Unit");
+                String price = resultSet.getString("Price");
+                Product product = new Product(productID, productName, supplierID, categoryID, unit, price);
+                arr.add(product);
+            }
+            Gson gson = new Gson();
+            String jison = gson.toJson(arr);
+            System.out.println(jison);
+            return jison;
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public static String getCountry(String country) {
         ResultSet resultSet;
         try {
             String query = "select * from suppliers where Country = " + "'" + country + "'";
@@ -31,6 +58,7 @@ public class Factory {
             }
             Gson gson = new Gson();
             String jison = gson.toJson(sup);
+            System.out.println(jison);
             return jison;
         } catch (Exception e) {
             System.out.println(e);
