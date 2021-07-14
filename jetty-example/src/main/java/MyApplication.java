@@ -2,6 +2,7 @@
 
 import connection.InnerJoin;
 import connection.LeftJoin;
+import connection.RightJoin;
 import org.rythmengine.utils.S;
 
 import javax.servlet.http.HttpServlet;
@@ -102,6 +103,10 @@ public class MyApplication extends HttpServlet {
         else if (action.equals("leftJoin")){
             String respLeft = LeftJoin.Join();
             write(resp,respLeft);
+        }
+        else if (action.equals("rightJoin")){
+            String respRight = RightJoin.rightJoin();
+            write(resp,respRight);
         }
     }
 
