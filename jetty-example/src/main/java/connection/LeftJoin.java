@@ -19,6 +19,7 @@ public class LeftJoin {
         ArrayList<Left> array = new ArrayList<>();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(query);
+            System.out.println(query);
             while (rs.next()) {
                 String name = rs.getString("CustomerName");
                 int id = rs.getInt("OrderID");
