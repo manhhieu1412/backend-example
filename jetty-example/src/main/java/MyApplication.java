@@ -1,5 +1,6 @@
 
 
+import connection.InnerJoin;
 import org.rythmengine.utils.S;
 
 import javax.servlet.http.HttpServlet;
@@ -31,6 +32,7 @@ public class MyApplication extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
 
         String price = req.getParameter("price");
         if (price != null) {
@@ -91,6 +93,10 @@ public class MyApplication extends HttpServlet {
         } else if (action.equals("suppliers")) {
             String respSupp = Factory.getSuppliers();
             write(resp, respSupp);
+        }
+        else if (action.equals("join")){
+            String respJoin = InnerJoin.innerJoin();
+            write(resp,respJoin);
         }
     }
 
