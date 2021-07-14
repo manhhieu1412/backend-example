@@ -2,6 +2,7 @@
 
 import connection.InnerJoin;
 import connection.LeftJoin;
+import connection.Like;
 import connection.RightJoin;
 import org.rythmengine.utils.S;
 
@@ -27,14 +28,13 @@ public class MyApplication extends HttpServlet {
     static {
         HMPerson.put("123", Hung);
         HMPerson.put("456", Hieu);
-
-
     }
+
+
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
 
         String price = req.getParameter("price");
         if (price != null) {
@@ -70,6 +70,7 @@ public class MyApplication extends HttpServlet {
             write(resp, respString);
             return;
         }
+
         String action = req.getParameter("action");
         if (action.equals("categories")) {
             String respString = Factory.getCategori();
@@ -107,6 +108,10 @@ public class MyApplication extends HttpServlet {
         else if (action.equals("rightJoin")){
             String respRight = RightJoin.rightJoin();
             write(resp,respRight);
+        }
+        else if (action.equals("like")){
+            String respLike = Like.getLike();
+            write(resp,respLike);
         }
     }
 
